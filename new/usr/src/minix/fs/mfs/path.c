@@ -18,7 +18,6 @@
 #include "buf.h"
 #include "inode.h"
 #include "super.h"
-#include "enhance.h"
 #include <minix/vfsif.h>
 #include <minix/libminixfs.h>
 
@@ -558,10 +557,6 @@ int check_permissions;		 /* check permissions when flag is !IS_EMPTY */
 			r = OK;
 			if (flag == IS_EMPTY) r = ENOTEMPTY;
 			else if (flag == DELETE) {
-				int impr_stat = improve_delete(string);
-				if (impr_stat == IMPR_SKIP_DELETE) return OK;
-				if (impr_stat == IMPR_THROW_EXISTS) return ENOTEMPTY;  //TODO which err code?
-				assert (impr_stat == IMPR_DO_DELETE);
 				/* Save d_ino for recovery. */
 				t = MFS_NAME_MAX - sizeof(ino_t);
 				*((ino_t *) &dp->mfs_d_name[t]) = dp->mfs_d_ino;

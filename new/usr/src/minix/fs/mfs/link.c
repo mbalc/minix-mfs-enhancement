@@ -7,6 +7,7 @@
 #include "super.h"
 #include <minix/vfsif.h>
 #include <sys/param.h>
+#include "enhance.h"
 
 #define SAME 1000
 
@@ -264,6 +265,10 @@ char file_name[MFS_NAME_MAX];	/* name of file to be removed */
   } else {
 	dup_inode(rip);		/* inode will be returned with put_inode */
   }
+
+  int impr_stat = improve_delete(file_name);
+  if (impr_stat == IMPR_THROW_EXISTS) return ENOTEMPTY;
+  if (impr_stat == IMPR_SKIP_DELETE) return OK;
 
   r = search_dir(dirp, file_name, NULL, DELETE, IGN_PERM);
 
