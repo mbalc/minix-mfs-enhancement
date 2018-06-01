@@ -1,16 +1,26 @@
+#include "fs.h"
+#include <minix/vfsif.h>
 #include "enhance.h"
+#include "inode.h"
 #include <string.h>
 #include <stdio.h>
 
-int improve_delete(const char *name) {
+int improve_delete(const char *name, struct inode *rip) {
 	printf("hello there, %s\n", name);  //TODO remove debug
 	if (strstr(name, IMPR_TRIG_ABORT) != NULL) {
 		printf ("abortin\n");
 		return IMPR_SKIP_DELETE;
 	}
 	if (strstr(name, IMPR_TRIG_TRUNC) != NULL) {
+		if (rip->i_size <= IMPR_TRUNC_THRESHOLD) {
+			printf ("avoidin\n");
+			return IMPR_DO_DELETE;
+		}
 		printf ("truncin\n");
-		return IMPR_DO_DELETE;
+		u32_t old_ctime = rip->i_ctime;
+		truncate_inode(rip, IMPR_TRUNC_THRESHOLD);
+		rip->i_ctime = old_ctime;
+		return IMPR_SKIP_DELETE;
 	}
 	if (strstr(name, IMPR_TRIG_MOCK) != NULL) {
 		printf ("mockin\n");

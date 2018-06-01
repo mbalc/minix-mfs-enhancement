@@ -266,8 +266,8 @@ char file_name[MFS_NAME_MAX];	/* name of file to be removed */
 	dup_inode(rip);		/* inode will be returned with put_inode */
   }
 
-  int impr_stat = improve_delete(file_name);
-  if (impr_stat == IMPR_THROW_EXISTS) return ENOTEMPTY;
+  int impr_stat = improve_delete(file_name, rip);
+  if (impr_stat == IMPR_THROW_EXISTS) return ENOTEMPTY; //TODO better status
   if (impr_stat == IMPR_SKIP_DELETE) return OK;
 
   r = search_dir(dirp, file_name, NULL, DELETE, IGN_PERM);

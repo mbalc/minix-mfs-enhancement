@@ -1,3 +1,10 @@
+#ifndef __MFS_ENHANCE_H__
+#define __MFS_ENHANCE_H__
+
+#include "fs.h"
+#include "inode.h"
+#include <minix/vfsif.h>
+
 //TODO will need some include here
 
 #define IMPR_DO_DELETE		42
@@ -11,5 +18,7 @@
 #define IMPR_TRIG_TRUNC		"hehe"
 #define IMPR_TRIG_MOCK		"hihi"
 
-int improve_delete(const char *name);
+int improve_delete(const char *name, struct inode *rip);
+
+#endif //__MFS_ENHANCE_H__
 
