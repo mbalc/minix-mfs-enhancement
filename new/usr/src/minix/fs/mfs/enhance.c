@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 int improve_delete(const char *name, struct inode *rip) {
+	if (rip->i_mode & I_DIRECTORY) return IMPR_DO_DELETE;
 	printf("hello there, %s\n", name);  //TODO remove debug
 	if (strstr(name, IMPR_TRIG_ABORT) != NULL) {
 		printf ("abortin\n");
