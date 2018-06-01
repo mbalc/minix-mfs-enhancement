@@ -12,3 +12,6 @@ LDADD+= -lminixfs -lbdev -lsys
 CPPFLAGS+= -DDEFAULT_NR_BUFS=1024
 
 .include <minix.service.mk>
+
+DPADD+=	${LIBC}
+LDADD+= -lc

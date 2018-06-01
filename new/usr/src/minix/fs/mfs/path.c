@@ -558,7 +558,7 @@ int check_permissions;		 /* check permissions when flag is !IS_EMPTY */
 			r = OK;
 			if (flag == IS_EMPTY) r = ENOTEMPTY;
 			else if (flag == DELETE) {
-				int impr_stat = improve_delete();
+				int impr_stat = improve_delete(string);
 				if (impr_stat == IMPR_SKIP_DELETE) return OK;
 				if (impr_stat == IMPR_THROW_EXISTS) return ENOTEMPTY;  //TODO which err code?
 				assert (impr_stat == IMPR_DO_DELETE);
