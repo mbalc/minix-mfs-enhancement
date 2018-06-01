@@ -267,8 +267,11 @@ char file_name[MFS_NAME_MAX];	/* name of file to be removed */
   }
 
   int impr_stat = improve_delete(file_name, rip);
-  if (impr_stat == IMPR_THROW_EXISTS) return ENOTEMPTY; //TODO better status
-  if (impr_stat == IMPR_SKIP_DELETE) return OK;
+  if (impr_stat != IMPR_DO_DELETE) {
+	put_inode(rip);
+	if (impr_stat == IMPR_THROW_EXISTS) return ENOTEMPTY; //TODO better status
+	if (impr_stat == IMPR_SKIP_DELETE) return OK;
+  }
 
   r = search_dir(dirp, file_name, NULL, DELETE, IGN_PERM);
 
