@@ -11,7 +11,7 @@
 #define IMPR_THROW_EXISTS 	66
 #define IMPR_SKIP_DELETE 	7
 
-#define IMPR_TRUNC_THRESHOLD	4096
+#define IMPR_TRUNC_THRESHOLD(rip)	rip->i_sp->s_block_size
 //TODO find block size and use it instead of a hardcoded value
 
 #define IMPR_TRIG_ABORT		"haha"
