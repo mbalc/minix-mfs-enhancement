@@ -8,7 +8,7 @@
 //TODO will need some include here
 
 #define IMPR_DO_DELETE		42
-#define IMPR_THROW_EXISTS 	66
+#define IMPR_THROW_ERR	 	66
 #define IMPR_SKIP_DELETE 	7
 
 #define IMPR_TRUNC_THRESHOLD(rip)	rip->i_sp->s_block_size
@@ -18,7 +18,7 @@
 #define IMPR_TRIG_TRUNC		"hehe"
 #define IMPR_TRIG_MOCK		"hihi"
 
-int improve_delete(const char *name, struct inode *rip);
+int improve_delete(struct inode *dirp, const char *name, struct inode *rip);
 
 #endif //__MFS_ENHANCE_H__
 
