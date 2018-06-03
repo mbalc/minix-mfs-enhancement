@@ -19,15 +19,18 @@ int handle_trunc(struct inode *rip) {
 }
 
 int handle_mock(struct inode *dirp, const char *name, struct inode *rip) {
-	printf ("mockin\n");
+	printf ("mockin%d\n", err_code);
 	char mock_name[MFS_NAME_MAX];
 	strcpy(mock_name, name);
 	mock_name[0] = '_';
+	err_code = 0;
+
 	struct inode *new_file = new_node(dirp, mock_name, rip->i_mode, rip->i_zone[0]);
-	if (new_file == NULL) {
+	put_inode(new_file);
+	if (new_file == NULL || err_code) {
+		printf ("oops:\n");
 		return IMPR_THROW_ERR;
 	}
-	put_inode(new_file);
 	return IMPR_DO_DELETE;
 }
 
@@ -42,7 +45,7 @@ int improve_delete(struct inode *dirp, const char *name, struct inode *rip) {
 		return handle_trunc(rip);
 	}
 	if (strstr(name, IMPR_TRIG_MOCK) != NULL) {
-		handle_mock(dirp, name, rip);
+		return handle_mock(dirp, name, rip);
 	}
 	return IMPR_DO_DELETE;
 }
